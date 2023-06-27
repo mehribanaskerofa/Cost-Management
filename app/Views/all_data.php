@@ -47,14 +47,15 @@
 
     </tr>
    <?php endforeach;?>
+
     </tbody>
 </table>
-
 <div>
-    <p>Income Total:<?= $incomeTotal?></p>
-    <p>Expense Total:<?= $expenseTotal?></p>
-    <p>Total:<?= $incomeTotal-$expenseTotal?></p>
+    <p>Income Total:<span class="income-text"><?= $incomeTotal?></span></p>
+    <p>Expense Total:<span class="expense-text"><?= $expenseTotal?></span></p>
+    <p>Total:<span class="total-text"><?= $incomeTotal-$expenseTotal?></span></p>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script>
     document.getElementById("paymentDropdown").addEventListener("change", function() {
@@ -69,8 +70,10 @@
             success: function(pays) {
                 var data = JSON.parse(pays);
                 $('#pay').html('');
+                var a=0,b=0;
                 $.each(data, function(key, value) {
-
+                    a+=parseInt(value['income']);
+                    b+=parseInt(value['expense']);
                     $("#pay").append("<tr>  "
                         + " <td>" + value['id'] +"</td> "
                         + " <td>" + value['amount'] +"</td> "
@@ -82,6 +85,10 @@
                         + " <td>" + (value['income']-value['expense']) +"</td> "
                         + "</tr>");
                 });
+                $(".income-text").html(a);
+                $(".expense-text").html(b);
+                $(".total-text").html(a-b);
+
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -103,8 +110,10 @@
                 console.log(11);
                 var data = JSON.parse(pays);
                 $('#pay').html('');
+                var a=0,b=0;
                 $.each(data, function(key, value) {
-
+                    a+=parseInt(value['income']);
+                    b+=parseInt(value['expense']);
                     $("#pay").append("<tr>  "
                         + " <td>" + value['id'] +"</td> "
                         + " <td>" + value['amount'] +"</td> "
@@ -116,6 +125,9 @@
                         + " <td>" + (value['income']-value['expense']) +"</td> "
                         + "</tr>");
                 });
+                $(".income-text").html(a);
+                $(".expense-text").html(b);
+                $(".total-text").html(a-b);
             },
             error: function(xhr, status, error) {
                 console.error(error);
